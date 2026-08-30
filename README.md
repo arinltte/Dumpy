@@ -1,4 +1,9 @@
-# Dumpy
+<p align="center">
+  <img src="dumpy.png" alt="Dumpy Logo" width="64" />
+  <br />
+  <h1 align="center">Dumpy</h1>
+    </p>
+</p>
 
 Dumpy is a lightweight Chrome extension (Manifest V3) that exports your chat history from popular
 AI chat apps as clean **Markdown (`.md`)** or **JSON (`.json`)** files — ready to feed into another
