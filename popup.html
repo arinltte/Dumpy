@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --text-main: #1e293b;
+      --border-color: #e2e8f0;
+      --header-text: #0f172a;
+      --sub-text: #64748b;
+      --box-bg: #f1f5f9;
+      --option-bg: #ffffff;
+      --btn-prim-bg: #1a1a1a;
+      --btn-prim-text: #ffffff;
+      --btn-sec-bg: #ffffff;
+      --btn-sec-text: #334155;
+      --btn-sec-border: #cbd5e1;
+      --btn-sec-hover: #f1f5f9;
+      --unsup-bg: #fff1f2;
+      --unsup-border: #fecdd3;
+      --unsup-text: #9f1239;
+    }
+    
+    /* Premium High-Quality Dark Mode (Black/Grey) */
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-main: #f3f4f6;
+      --border-color: #27272a;
+      --header-text: #ffffff;
+      --sub-text: #a1a1aa;
+      --box-bg: #18181b;
+      --option-bg: #18181b;
+      --btn-prim-bg: #ffffff;
+      --btn-prim-text: #09090b;
+      --btn-sec-bg: #18181b;
+      --btn-sec-text: #f3f4f6;
+      --btn-sec-border: #3f3f46;
+      --btn-sec-hover: #27272a;
+      --unsup-bg: #2a1215;
+      --unsup-border: #5c2026;
+      --unsup-text: #fca5a5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      width: 320px;
+      margin: 0;
+      padding: 16px;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      object-fit: cover;
+      display: block;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--header-text);
+    }
+    .subtitle {
+      font-size: 11px;
+      color: var(--sub-text);
+      margin: 2px 0 0 0;
+    }
+    .theme-toggle {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--sub-text);
+      padding: 4px;
+      outline: none;
+    }
+    .status-box {
+      background-color: var(--box-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .status-row:last-child {
+      margin-bottom: 0;
+    }
+    .status-label {
+      color: var(--sub-text);
+    }
+    .status-val {
+      font-weight: 500;
+    }
+    .options-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      background: var(--option-bg);
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    button.btn-primary, button.btn-secondary {
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s, background-color 0.2s;
+    }
+    button.btn-primary {
+      background-color: var(--btn-prim-bg);
+      color: var(--btn-prim-text);
+      border: none;
+    }
+    button.btn-primary:hover {
+      opacity: 0.9;
+    }
+    button:disabled {
+      background-color: #52525b;
+      color: #a1a1aa;
+      border: none;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background-color: var(--btn-sec-bg);
+      color: var(--btn-sec-text);
+      border: 1px solid var(--btn-sec-border);
+    }
+    .btn-secondary:not(:disabled):hover {
+      background-color: var(--btn-sec-hover);
+    }
+    .footer {
+      font-size: 11px;
+      text-align: center;
+      color: var(--sub-text);
+      margin-top: 16px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 8px;
+    }
+    .unsupported-box {
+      background-color: var(--unsup-bg);
+      border-color: var(--unsup-border);
+      color: var(--unsup-text);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icon128.png" alt="Icon" class="icon">
+    <div>
+      <h1 class="title">Dumpy</h1>
+      <p class="subtitle">Extract LLM chat histories</p>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+  </div>
+
+  <div id="active-panel">
+    <div class="status-box">
+      <div class="status-row">
+        <span class="status-label">Active Site:</span>
+        <span class="status-val" id="site-name">Checking...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Detect Status:</span>
+        <span class="status-val" id="detect-status" style="color: var(--sub-text);">Awaiting Tab</span>
+      </div>
+    </div>
+
+    <label class="options-row">
+      <input type="checkbox" id="toggle-timestamp">
+      <span>Include Timestamps in Export</span>
+    </label>
+
+    <label class="options-row">
+      <input type="checkbox" id="toggle-summary-prompt" checked>
+      <span>Include summary prompt at top (Markdown only)</span>
+    </label>
+
+    <div class="btn-group">
+      <button id="btn-markdown" class="btn-primary" disabled>
+        Export as Markdown (.md)
+      </button>
+      <button id="btn-json" class="btn-secondary" disabled>
+        Export as JSON (.json)
+      </button>
+    </div>
+  </div>
+
+  <div id="unsupported-panel" style="display: none;">
+    <div class="status-box unsupported-box">
+      This extension only works on supported LLM Chat interfaces (ChatGPT, Gemini, Claude, DeepSeek, Perplexity, Kimi, Qwen, Google AI Studio).
+    </div>
+    <div style="font-size: 12px; color: var(--sub-text); text-align: center; margin-bottom: 12px;">
+      Navigate to a chat tab to export.
+    </div>
+  </div>
+
+  <div class="footer">
+    Dumpy v0.1.0
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
